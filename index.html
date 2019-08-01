@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <title>measure</title>
+</head>
+<body>
+    <div id="start">
+        <span id="startBottun">start</span>
+    </div>
+    <div id="data">N/A</div>
+
+
+<script>
+    // 加速度の値を入れる変数を3個用意
+    var aX = 0, aY = 0, aZ = 0;  
+
+    // 加速度センサの値が変化したら実行される devicemotion イベント
+    window.addEventListener("devicemotion", (dat) => {
+        aX = dat.accelerationIncludingGravity.x;
+        aY = dat.accelerationIncludingGravity.y;
+        aZ = dat.accelerationIncludingGravity.z;
+    });
+
+    window.onload = function(){
+        var $data = document.getElementById("data")
+        var $start = document.getElementById("startBottun")
+        $start.onmousedown = function($event){
+        // 指定時間ごとに繰り返し実行される setInterval(実行する内容, 間隔[ms]) タイマーを設定
+        var timer = window.setInterval(() => {
+            displayData();      // displayData 関数を実行
+        }, 33); // 33msごとに（1秒間に約30回）        
+        
+        }
+
+        $start.onmouseup = function($event){
+
+        }
+
+    }
+
+
+    // データを表示する displayData 関数
+    function displayData() {
+        var data = document.getElementById("data");   // データを表示するdiv要素の取得=その部分に表示させるよー的な感じ
+        data.innerHTML = "x: " + aX + "<br>"         // x軸の加速度
+                        + "y: " + aY + "<br>"         // y軸の加速度
+                        + "z: " + aZ;                 // z軸の加速度
+    }
+
+</script>
+</body>
+</html>
